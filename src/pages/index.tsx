@@ -4,13 +4,13 @@ import Head from "next/head";
 import Image from "next/image";
 
 const Home: NextPage = () => {
-  const hello = trpc.hello.useQuery({ text: "Dogan" });
-  if (!hello.data) {
+  const { data, isLoading } = trpc.hello.useQuery({ text: "Dogan" });
+  if (isLoading) {
     return <div>Loading...</div>;
   }
   return (
     <div>
-      <p>{hello.data.greeting}</p>
+      <p>{data?.greeting}</p>
     </div>
   );
 };

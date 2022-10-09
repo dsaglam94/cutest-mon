@@ -3,8 +3,30 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { getOptionsForVote } from "../utils/getRandomPokemon";
+import { useEffect, useRef, useState } from "react";
+
+type Ids = number[];
 
 const Home: NextPage = () => {
+  const [ids, updateIds] = useState<Ids>([]);
+
+  useEffect(() => {
+    const ids = getOptionsForVote();
+    updateIds(ids);
+  }, []);
+
+  const [first, second] = ids;
+
+  const firstPokemon = trpc.getPokemonById.useQuery({ id: first });
+  const secondPokemon = trpc.getPokemonById.useQuery({ id: second });
+
+  if (firstPokemon.isLoading || secondPokemon.isLoading)
+    return <div>..Loading</div>;
+
+  console.log(firstPokemon.data);
+  console.log(secondPokemon.data);
+
   return (
     <main className="h-screen w-screen flex flex-col items-center justify-between p-10">
       <header>
@@ -14,13 +36,13 @@ const Home: NextPage = () => {
       </header>
       <section className="flex items-center justify-between w-full max-w-xl">
         <div className="flex flex-col items-center gap-5">
-          <div className="bg-red-300 w-52 h-52" />
+          <div>{first}</div>
           <button className="bg-white text-black px-10 py-2 rounded font-bold hover:opacity-90">
             Cutest
           </button>
         </div>
         <div className="flex flex-col items-center gap-5">
-          <div className="bg-red-300 w-52 h-52" />
+          <div>{second}</div>
           <button className="bg-white text-black px-10 py-2 rounded font-bold hover:opacity-90">
             Cutest
           </button>

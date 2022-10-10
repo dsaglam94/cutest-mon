@@ -1,4 +1,8 @@
-import { initTRPC } from "@trpc/server";
+import {
+  inferProcedureInput,
+  inferProcedureOutput,
+  initTRPC,
+} from "@trpc/server";
 import * as trpcNext from "@trpc/server/adapters/next";
 import { z } from "zod";
 import { PokemonClient } from "pokenode-ts";
@@ -27,3 +31,5 @@ export default trpcNext.createNextApiHandler({
   router: appRouter,
   createContext: () => ({}),
 });
+
+export type PokemonOutput = inferProcedureOutput<AppRouter["getPokemonById"]>;

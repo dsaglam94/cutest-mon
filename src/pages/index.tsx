@@ -1,13 +1,17 @@
-import { trpc } from "../utils/trpc";
+import { useEffect, useRef, useState } from "react";
+
+import type React from "react";
 import type { NextPage } from "next";
+
+import { trpc } from "../utils/trpc";
+import { PokemonOutput } from "./api/trpc/[trpc]";
+import { getOptionsForVote } from "../utils/getRandomPokemon";
+
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { getOptionsForVote } from "../utils/getRandomPokemon";
-import { useEffect, useRef, useState } from "react";
+
 import { HashLoader } from "react-spinners";
-import { PokemonOutput } from "./api/trpc/[trpc]";
-import type React from "react";
 
 type Ids = number[];
 
@@ -24,8 +28,14 @@ const Home: NextPage = () => {
   const firstPokemon = trpc.getPokemonById.useQuery({ id: first });
   const secondPokemon = trpc.getPokemonById.useQuery({ id: second });
 
+  const voteMutation = trpc.castVote.useMutation();
+
   const voteForCutest = (selected: number) => {
-    //
+    if (selected === first) {
+      voteMutation.mutate({ votedFor: first, votedAgainst: second });
+    } else {
+      voteMutation.mutate({ votedFor: second, votedAgainst: first });
+    }
 
     updateIds(getOptionsForVote());
   };

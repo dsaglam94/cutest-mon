@@ -1,7 +1,6 @@
 import { inferProcedureOutput, initTRPC } from "@trpc/server";
 import * as trpcNext from "@trpc/server/adapters/next";
 import { z } from "zod";
-import { PokemonClient } from "pokenode-ts";
 import { prisma } from "../../../server/utils/prisma";
 
 export const t = initTRPC.create();

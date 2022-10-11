@@ -1,7 +1,10 @@
 import React from "react";
 import Image from "next/image";
-import { GetStaticProps } from "next";
-import type { InferGetStaticPropsType } from "next";
+import { GetStaticProps, GetServerSideProps } from "next";
+import type {
+  InferGetStaticPropsType,
+  InferGetServerSidePropsType,
+} from "next";
 import { inferAsyncReturnType } from "@trpc/server";
 import { prisma } from "../server/utils/prisma";
 
@@ -36,7 +39,7 @@ type PokemonQueryResult = inferAsyncReturnType<typeof getPokemonInOrder>;
 
 const results = ({
   pokemon,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <main className="w-screen h-screen flex flex-col items-center justify-between p-10 gap-10">
       <header className="text-2xl mb-auto">
@@ -86,13 +89,12 @@ const PokemonListing: React.FC<{
 
 export default results;
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const pokemonOrdered = await getPokemonInOrder();
 
   return {
     props: {
       pokemon: pokemonOrdered,
     },
-    revalidate: 60,
   };
 };

@@ -14,15 +14,19 @@ export const appRouter = t.router({
       })
     )
     .query(async ({ input }) => {
-      const api = new PokemonClient();
-      const pokemon = api.getPokemonById(input.id);
+      const pokemon = await prisma.pokemon.findFirst({
+        where: { id: input.id },
+      });
+
+      if (!pokemon) throw new Error("it doesnt exist");
+
       return pokemon;
     }),
   castVote: t.procedure
     .input(
       z.object({
-        votedFor: z.number(),
-        votedAgainst: z.number(),
+        votedForId: z.number(),
+        votedAgainstId: z.number(),
       })
     )
     .mutation(async ({ input }) => {

@@ -32,9 +32,9 @@ const Home: NextPage = () => {
 
   const voteForCutest = (selected: number) => {
     if (selected === first) {
-      voteMutation.mutate({ votedFor: first, votedAgainst: second });
+      voteMutation.mutate({ votedForId: first, votedAgainstId: second });
     } else {
-      voteMutation.mutate({ votedFor: second, votedAgainst: first });
+      voteMutation.mutate({ votedForId: second, votedAgainstId: first });
     }
 
     updateIds(getOptionsForVote());
@@ -65,7 +65,7 @@ const Home: NextPage = () => {
         </h1>
       </header>
       <section className="flex items-center justify-between w-full max-w-xl">
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center gap-2">
           {!firstPokemon.isLoading &&
             !secondPokemon.isLoading &&
             firstPokemon.data && (
@@ -75,7 +75,7 @@ const Home: NextPage = () => {
               />
             )}
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center gap-2">
           {!firstPokemon.isLoading &&
             !secondPokemon.isLoading &&
             secondPokemon.data && (
@@ -112,9 +112,9 @@ const PokemonListing: React.FC<{
   return (
     <>
       <h2 className="capitalize text-2xl">{pokemon.name}</h2>
-      {pokemon.sprites.front_default && (
+      {pokemon.spriteURL && (
         <Image
-          src={pokemon.sprites.front_default}
+          src={pokemon.spriteURL}
           alt={pokemon.name}
           width="200px"
           height="200px"

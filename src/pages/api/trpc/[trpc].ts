@@ -14,7 +14,7 @@ export const appRouter = t.router({
       })
     )
     .query(async ({ input }) => {
-      const pokemon = await prisma.pokemon.findFirst({
+      const pokemon = await prisma.pokemon.findUnique({
         where: { id: input.id },
       });
 

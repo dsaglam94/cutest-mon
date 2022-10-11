@@ -95,6 +95,11 @@ const Home: NextPage = () => {
           Twitter
         </a>
         <div className="h-8 w-[1px] bg-white" />
+
+        <Link href="/results">
+          <a>Results</a>
+        </Link>
+        <div className="h-8 w-[1px] bg-white" />
         <a href="https://github.com/dsaglam94" target="_blank" rel="noreferrer">
           GitHub
         </a>

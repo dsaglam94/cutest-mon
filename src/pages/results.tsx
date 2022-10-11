@@ -39,7 +39,7 @@ type PokemonQueryResult = inferAsyncReturnType<typeof getPokemonInOrder>;
 
 const results = ({
   pokemon,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
+}: InferGetServerSidePropsType<typeof getStaticProps>) => {
   return (
     <main className="w-screen h-screen flex flex-col items-center justify-between p-10 gap-10">
       <header className="text-2xl mb-auto">

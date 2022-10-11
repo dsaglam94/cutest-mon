@@ -39,7 +39,7 @@ type PokemonQueryResult = inferAsyncReturnType<typeof getPokemonInOrder>;
 
 const results = ({
   pokemon,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <main className="w-screen h-screen flex flex-col items-center justify-between p-10 gap-10">
       <header className="text-2xl mb-auto">
@@ -89,12 +89,13 @@ const PokemonListing: React.FC<{
 
 export default results;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const pokemonOrdered = await getPokemonInOrder();
 
   return {
     props: {
       pokemon: pokemonOrdered,
+      revalidate: 60,
     },
   };
 };

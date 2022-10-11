@@ -89,13 +89,13 @@ const PokemonListing: React.FC<{
 
 export default results;
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetServerSideProps = async () => {
   const pokemonOrdered = await getPokemonInOrder();
 
   return {
     props: {
       pokemon: pokemonOrdered,
-      revalidate: 60,
     },
+    revalidate: 60,
   };
 };

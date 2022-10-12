@@ -49,7 +49,7 @@ const generateCountPercent = (pokemon: PokemonQueryResult) => {
 
 const results = ({
   pokemon,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <main className="w-screen h-screen flex flex-col items-center justify-between p-10 gap-10">
       <header className="text-2xl mb-auto">
@@ -99,7 +99,7 @@ const PokemonListing: React.FC<{
 
 export default results;
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   // const pokemonOrdered = await getPokemonInOrder();
 
   return {

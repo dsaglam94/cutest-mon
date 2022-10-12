@@ -8,34 +8,44 @@ import type {
 import { inferAsyncReturnType } from "@trpc/server";
 import { prisma } from "../server/utils/prisma";
 
-const getPokemonInOrder = async () => {
-  return await prisma.pokemon.findMany({
-    orderBy: {
-      voteFor: { _count: "desc" },
-    },
-    select: {
-      id: true,
-      name: true,
-      spriteURL: true,
-      _count: {
-        select: {
-          voteFor: true,
-          voteAgainst: true,
-        },
-      },
-    },
-  });
+// const getPokemonInOrder = async () => {
+//   return await prisma.pokemon.findMany({
+//     orderBy: {
+//       voteFor: { _count: "desc" },
+//     },
+//     select: {
+//       id: true,
+//       name: true,
+//       spriteURL: true,
+//       _count: {
+//         select: {
+//           voteFor: true,
+//           voteAgainst: true,
+//         },
+//       },
+//     },
+//   });
+// };
+
+type PokemonQueryResult = {
+  _count: {
+    voteFor: number;
+    voteAgainst: number;
+  };
+  id: number;
+  name: string;
+  spriteURL: string;
 };
 
-const generateCountPercent = (pokemon: PokemonQueryResult[number]) => {
+// type PokemonQueryResult = inferAsyncReturnType<typeof getPokemonInOrder>;
+
+const generateCountPercent = (pokemon: PokemonQueryResult) => {
   const { voteFor, voteAgainst } = pokemon._count;
   if (voteFor + voteAgainst === 0) {
     return 0;
   }
   return (voteFor / (voteFor + voteAgainst)) * 100;
 };
-
-type PokemonQueryResult = inferAsyncReturnType<typeof getPokemonInOrder>;
 
 const results = ({
   pokemon,
@@ -48,7 +58,7 @@ const results = ({
       <section className="w-full md:max-w-xl">
         <div className="w-full flex flex-col items-center border">
           {pokemon &&
-            pokemon.map((p: PokemonQueryResult[number], idx: number) => {
+            pokemon.map((p: PokemonQueryResult, idx: number) => {
               return <PokemonListing key={idx} pokemon={p} idx={idx} />;
             })}
         </div>
@@ -58,7 +68,7 @@ const results = ({
 };
 
 const PokemonListing: React.FC<{
-  pokemon: PokemonQueryResult[number];
+  pokemon: PokemonQueryResult;
   idx: number;
 }> = ({ pokemon, idx }) => {
   console.log(pokemon);

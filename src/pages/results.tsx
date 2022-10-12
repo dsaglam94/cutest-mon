@@ -39,7 +39,7 @@ type PokemonQueryResult = inferAsyncReturnType<typeof getPokemonInOrder>;
 
 const results = ({
   pokemon,
-}: InferGetServerSidePropsType<typeof getStaticProps>) => {
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <main className="w-screen h-screen flex flex-col items-center justify-between p-10 gap-10">
       <header className="text-2xl mb-auto">
@@ -89,12 +89,27 @@ const PokemonListing: React.FC<{
 
 export default results;
 
-export const getStaticProps: GetServerSideProps = async () => {
-  const pokemonOrdered = await getPokemonInOrder();
+export const getStaticProps: GetStaticProps = async () => {
+  // const pokemonOrdered = await getPokemonInOrder();
 
   return {
     props: {
-      pokemon: pokemonOrdered,
+      pokemon: await prisma.pokemon.findMany({
+        orderBy: {
+          voteFor: { _count: "desc" },
+        },
+        select: {
+          id: true,
+          name: true,
+          spriteURL: true,
+          _count: {
+            select: {
+              voteFor: true,
+              voteAgainst: true,
+            },
+          },
+        },
+      }),
     },
     revalidate: 60,
   };

@@ -2,21 +2,28 @@ import { httpBatchLink } from "@trpc/client";
 import { createTRPCNext } from "@trpc/next";
 import type { AppRouter } from "../pages/api/trpc/[trpc]";
 
+// function getBaseUrl() {
+//   if (typeof window !== "undefined")
+//     // browser should use relative path
+//     return "";
+
+//   if (process.env.VERCEL_URL)
+//     // reference for vercel.com
+//     return `https://${process.env.VERCEL_URL}`;
+
+//   if (process.env.RENDER_INTERNAL_HOSTNAME)
+//     // reference for render.com
+//     return `http://${process.env.RENDER_INTERNAL_HOSTNAME}:${process.env.PORT}`;
+
+//   // assume localhost
+//   return `http://localhost:${process.env.PORT ?? 3000}`;
+// }
+
 function getBaseUrl() {
-  if (typeof window !== "undefined")
-    // browser should use relative path
-    return "";
+  if (process.browser) return ""; // Browser should use current path
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // SSR should use vercel url
 
-  if (process.env.VERCEL_URL)
-    // reference for vercel.com
-    return `https://${process.env.VERCEL_URL}`;
-
-  if (process.env.RENDER_INTERNAL_HOSTNAME)
-    // reference for render.com
-    return `http://${process.env.RENDER_INTERNAL_HOSTNAME}:${process.env.PORT}`;
-
-  // assume localhost
-  return `http://localhost:${process.env.PORT ?? 3000}`;
+  return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
 }
 
 export const trpc = createTRPCNext<AppRouter>({

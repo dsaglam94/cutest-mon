@@ -114,10 +114,6 @@ const PokemonListing: React.FC<{
   pokemon: PokemonOutput;
   vote: () => void;
 }> = ({ pokemon, vote }) => {
-  if (!pokemon) {
-    return <div>...loading</div>;
-  }
-
   return (
     <>
       <h2 className="capitalize text-2xl">{pokemon.name}</h2>

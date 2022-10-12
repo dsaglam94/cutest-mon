@@ -121,6 +121,5 @@ export const getServerSideProps: GetServerSideProps = async () => {
         },
       }),
     },
-    revalidate: 60,
   };
 };

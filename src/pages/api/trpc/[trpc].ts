@@ -12,8 +12,8 @@ export const appRouter = t.router({
         id: z.number(),
       })
     )
-    .query(async ({ input }) => {
-      const pokemon = await prisma.pokemon.findFirst({
+    .query(({ input }) => {
+      const pokemon = prisma.pokemon.findFirst({
         where: { id: input.id },
       });
 

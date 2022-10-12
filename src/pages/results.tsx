@@ -232,8 +232,8 @@ const ResultsPage: React.FC<{
 
 export default ResultsPage;
 
-export const getStaticProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const pokemonOrdered = await getPokemonInOrder();
   const DAY_IN_SECONDS = 60 * 60 * 24;
-  return { props: { pokemon: pokemonOrdered }, revalidate: DAY_IN_SECONDS };
+  return { props: { pokemon: pokemonOrdered } };
 };

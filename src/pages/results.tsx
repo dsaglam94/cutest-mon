@@ -100,26 +100,11 @@ const PokemonListing: React.FC<{
 export default results;
 
 export const getStaticProps: GetStaticProps = async () => {
-  // const pokemonOrdered = await getPokemonInOrder();
+  const pokemonOrdered = await getPokemonInOrder();
 
   return {
     props: {
-      pokemon: await prisma.pokemon.findMany({
-        orderBy: {
-          voteFor: { _count: "desc" },
-        },
-        select: {
-          id: true,
-          name: true,
-          spriteURL: true,
-          _count: {
-            select: {
-              voteFor: true,
-              voteAgainst: true,
-            },
-          },
-        },
-      }),
+      pokemon: pokemonOrdered,
     },
     revalidate: 60,
   };

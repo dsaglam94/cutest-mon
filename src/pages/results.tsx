@@ -7,6 +7,7 @@ import type {
 } from "next";
 import { inferAsyncReturnType } from "@trpc/server";
 import { prisma } from "../server/utils/prisma";
+import Head from "next/head";
 
 const getPokemonInOrder = async () => {
   return await prisma.pokemon.findMany({
@@ -27,16 +28,6 @@ const getPokemonInOrder = async () => {
   });
 };
 
-// type PokemonQueryResult = {
-//   _count: {
-//     voteFor: number;
-//     voteAgainst: number;
-//   };
-//   id: number;
-//   name: string;
-//   spriteURL: string;
-// };
-
 type PokemonQueryResult = inferAsyncReturnType<typeof getPokemonInOrder>;
 
 const generateCountPercent = (pokemon: PokemonQueryResult[number]) => {
@@ -52,6 +43,9 @@ const results = ({
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <main className="w-screen h-screen flex flex-col items-center justify-between p-10 gap-10">
+      <Head>
+        <title>Cutest Pokemon Results</title>
+      </Head>
       <header className="text-2xl mb-auto">
         <h1>Behold! Results are here!</h1>
       </header>

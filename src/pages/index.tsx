@@ -59,6 +59,9 @@ const Home: NextPage = () => {
 
   return (
     <main className="h-screen w-screen flex flex-col items-center justify-between p-10">
+      <Head>
+        <title>Cutest Pokemon</title>
+      </Head>
       <header>
         <h1 className="text-[1.5rem] md:text-[2rem]">
           Which one is the cutest pokemon?
@@ -100,9 +103,9 @@ const Home: NextPage = () => {
           <a>Results</a>
         </Link>
         <div className="h-8 w-[1px] bg-white" />
-        <a href="https://github.com/dsaglam94" target="_blank" rel="noreferrer">
-          GitHub
-        </a>
+        <Link href="/about">
+          <a>About</a>
+        </Link>
       </footer>
     </main>
   );

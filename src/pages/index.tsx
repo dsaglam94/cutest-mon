@@ -54,20 +54,17 @@ const Home: NextPage = () => {
     );
   }
 
-  console.log(firstPokemon.data);
-  console.log(secondPokemon.data);
-
   return (
-    <main className="h-screen w-screen flex flex-col items-center justify-between p-10">
+    <main className="min-h-screen w-screen flex flex-col items-center justify-between p-10">
       <Head>
-        <title>Cutest Pokemon</title>
+        <title>Cutest-mon</title>
       </Head>
       <header>
         <h1 className="text-[1.5rem] md:text-[2rem]">
           Which one is the cutest pokemon?
         </h1>
       </header>
-      <section className="flex items-center justify-between w-full max-w-xl">
+      <section className="flex flex-col md:flex-row items-center justify-between w-full max-w-xl py-20">
         <div className="flex flex-col items-center gap-2">
           {!firstPokemon.isLoading &&
             !secondPokemon.isLoading &&
@@ -78,6 +75,7 @@ const Home: NextPage = () => {
               />
             )}
         </div>
+        <div className="my-10">Vs</div>
         <div className="flex flex-col items-center gap-2">
           {!firstPokemon.isLoading &&
             !secondPokemon.isLoading &&
@@ -89,7 +87,7 @@ const Home: NextPage = () => {
             )}
         </div>
       </section>
-      <footer className="text-xl md:text-2xl flex gap-5">
+      <footer className="text-lg md:text-xl flex gap-5">
         <a
           href="https://twitter.com/dsaglam94"
           target="_blank"

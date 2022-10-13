@@ -1,13 +1,12 @@
 import React from "react";
 import Image from "next/image";
-import { GetStaticProps, GetServerSideProps } from "next";
-import type {
-  InferGetStaticPropsType,
-  InferGetServerSidePropsType,
-} from "next";
+import Head from "next/head";
+
+import { GetStaticProps } from "next";
 import { inferAsyncReturnType } from "@trpc/server";
 import { prisma } from "../server/utils/prisma";
-import Head from "next/head";
+
+import type { InferGetStaticPropsType } from "next";
 
 const getPokemonInOrder = async () => {
   return await prisma.pokemon.findMany({
@@ -42,12 +41,12 @@ const results = ({
   pokemon,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
-    <main className="w-screen h-screen flex flex-col items-center justify-between p-10 gap-10">
+    <main className="w-screen min-h-screen flex flex-col items-center justify-between p-10 gap-10">
       <Head>
-        <title>Cutest Pokemon Results</title>
+        <title>Cutest-mon | Results</title>
       </Head>
       <header className="text-2xl mb-auto">
-        <h1>Behold! Results are here!</h1>
+        <h1>Behold! Results are here.</h1>
       </header>
       <section className="w-full md:max-w-xl">
         <div className="w-full flex flex-col items-center border">
@@ -65,7 +64,6 @@ const PokemonListing: React.FC<{
   pokemon: PokemonQueryResult[number];
   idx: number;
 }> = ({ pokemon, idx }) => {
-  console.log(pokemon);
   return (
     <div
       key={idx}

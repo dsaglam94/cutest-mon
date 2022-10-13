@@ -17,4 +17,3 @@ Run `yarn` then `yarn dev` these commands will run the app in your `localhost:30
 ## TODOS
 
 - [] needs some refactoring
-- [] shouldn't expose `.env` file in the repo. (vercel being annoying)
